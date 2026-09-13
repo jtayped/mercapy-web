@@ -1,0 +1,80 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "unit_price": {
+      "type": "string",
+      "pattern": "^-?\\d+(\\.\\d+)?$"
+    },
+    "bulk_price": {
+      "anyOf": [
+        {
+          "type": "string",
+          "pattern": "^-?\\d+(\\.\\d+)?$"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "reference_price": {
+      "anyOf": [
+        {
+          "type": "string",
+          "pattern": "^-?\\d+(\\.\\d+)?$"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "unit_size": {
+      "type": "string",
+      "pattern": "^-?\\d+(\\.\\d+)?$"
+    },
+    "drained_weight": {
+      "anyOf": [
+        {
+          "type": "string",
+          "pattern": "^-?\\d+(\\.\\d+)?$"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "total_units": {
+      "anyOf": [
+        {
+          "type": "string",
+          "pattern": "^-?\\d+(\\.\\d+)?$"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "size_format": {
+      "type": "string"
+    },
+    "reference_format": {
+      "type": "string"
+    },
+    "expected": {
+      "type": "string",
+      "pattern": "^-?\\d+(\\.\\d+)?$"
+    }
+  },
+  "required": [
+    "unit_price",
+    "bulk_price",
+    "reference_price",
+    "unit_size",
+    "drained_weight",
+    "total_units",
+    "size_format",
+    "reference_format",
+    "expected"
+  ],
+  "additionalProperties": false
+}

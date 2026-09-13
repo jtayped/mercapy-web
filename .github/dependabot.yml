@@ -1,0 +1,41 @@
+version: 2
+
+# one grouped pull request per ecosystem per week. minor and patch travel
+# together because they are reviewed as a batch; majors come one at a time.
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 5
+    groups:
+      npm-minor-patch:
+        update-types: [minor, patch]
+
+  - package-ecosystem: uv
+    directory: /apps/collector
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 5
+    groups:
+      collector-minor-patch:
+        update-types: [minor, patch]
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 5
+    groups:
+      actions-minor-patch:
+        update-types: [minor, patch]
+
+  # the root directory is where Dockerfile.collector lives.
+  - package-ecosystem: docker
+    directory: /
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 5
+    groups:
+      docker-minor-patch:
+        update-types: [minor, patch]

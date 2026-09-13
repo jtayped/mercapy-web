@@ -1,0 +1,5 @@
+{
+  "extends": "@mercapy/config/tsconfig",
+  "compilerOptions": { "noEmit": true, "rootDir": "src", "types": ["node"] },
+  "include": ["src"]
+}

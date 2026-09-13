@@ -1,0 +1,30 @@
+# pre-commit only reports, it never rewrites tracked files: an autofixing hook
+# on a partially staged file can lose the unstaged half. fix with `pnpm format`
+# and `pnpm lint`, then stage again.
+pre-commit:
+  parallel: true
+  commands:
+    lint:
+      glob: '*.{ts,tsx}'
+      run: pnpm exec eslint {staged_files}
+    format:
+      glob: '*.{ts,tsx,js,mjs,json,css,md,yaml,yml}'
+      run: pnpm exec prettier --check {staged_files}
+    file-length:
+      glob: '*.{ts,tsx,js,mjs,py,css,sql}'
+      run: node scripts/check-file-length.mjs {staged_files}
+    ruff:
+      glob: 'apps/collector/**/*.py'
+      run: uv --project apps/collector run ruff check {staged_files} && uv --project apps/collector run ruff format --check {staged_files}
+    gitleaks:
+      run: gitleaks protect --staged --redact
+pre-push:
+  parallel: true
+  commands:
+    typecheck:
+      run: pnpm typecheck
+    lint:
+      run: pnpm lint
+    test:
+      run: pnpm test
+      fail_text: 'the collector tests need the dev database: `pnpm db:up`.'

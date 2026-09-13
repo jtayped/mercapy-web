@@ -1,0 +1,11 @@
+{
+  "name": "@mercapy/config",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./eslint": "./eslint.base.js",
+    "./tsconfig": "./tsconfig.base.json",
+    "./prettier": "./prettier.base.js"
+  }
+}

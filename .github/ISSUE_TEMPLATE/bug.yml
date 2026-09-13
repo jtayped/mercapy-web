@@ -1,0 +1,51 @@
+name: bug
+description: something behaves differently from what it says it does
+labels: [bug]
+body:
+  - type: dropdown
+    id: area
+    attributes:
+      label: where
+      options:
+        - collector
+        - db schema or migrations
+        - contract
+        - build, ci or docker
+        - somewhere else
+    validations:
+      required: true
+  - type: textarea
+    id: what
+    attributes:
+      label: what happened
+      description: include the command you ran and the output, redacting any secrets.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: what you expected instead
+    validations:
+      required: true
+  - type: textarea
+    id: repro
+    attributes:
+      label: how to reproduce it
+      placeholder: |
+        1. pnpm db:up
+        2. pnpm collector collect --warehouse bcn1
+        3. ...
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: commit or image tag
+      placeholder: sha-1a2b3c4, or ghcr.io/jtayped/mercapy-collector:main
+  - type: checkboxes
+    id: no-secrets
+    attributes:
+      label: before you submit
+      options:
+        - label: this report contains no credentials, `.env` contents or collected data
+          required: true

@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: security vulnerability
+    url: https://github.com/jtayped/mercapy-web/security/policy
+    about: report it privately to contact@joeltaylor.business, never as an issue.

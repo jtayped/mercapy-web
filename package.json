@@ -1,0 +1,39 @@
+{
+  "name": "mercapy-web",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@11.3.0",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "lint": "eslint . && node scripts/check-file-length.mjs && pnpm lint:collector",
+    "lint:collector": "uv run --directory apps/collector ruff check && uv run --directory apps/collector ruff format --check && uv run --directory apps/collector mypy",
+    "typecheck": "pnpm -r typecheck",
+    "test": "pnpm -r test && pnpm test:collector",
+    "test:collector": "uv run --directory apps/collector pytest -q",
+    "format": "prettier --write . && uv run --directory apps/collector ruff format",
+    "format:check": "prettier --check .",
+    "contract:schema": "pnpm --filter @mercapy/contract export-schema",
+    "db:generate": "pnpm --filter @mercapy/db generate",
+    "db:up": "docker compose -f compose.dev.yaml up -d --wait",
+    "db:down": "docker compose -f compose.dev.yaml down",
+    "collector": "uv run --directory apps/collector --env-file ../../.env collector"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.10.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-import-resolver-typescript": "^4.4.5",
+    "eslint-plugin-boundaries": "^7.2.0",
+    "eslint-plugin-import-x": "^4.17.1",
+    "eslint-plugin-jsx-a11y": "^6.10.2",
+    "eslint-plugin-unicorn": "^74.0.0",
+    "globals": "^17.12.0",
+    "lefthook": "^2.1.12",
+    "prettier": "^3.9.6",
+    "prettier-plugin-tailwindcss": "^0.8.1",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.69.0"
+  }
+}

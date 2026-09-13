@@ -1,0 +1,167 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "ean": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "slug": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "brand": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "packaging": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "main_feature": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "photos": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "legal_name": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "origin": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "suppliers": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "counter_info": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "danger_mentions": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "mandatory_mentions": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "production_variant": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "usage_instructions": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "storage_instructions": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "alcohol_by_volume": {
+      "anyOf": [
+        {
+          "type": "string",
+          "pattern": "^-?\\d+(\\.\\d+)?$"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "prepared_by_mercadona": {
+      "type": [
+        "boolean",
+        "null"
+      ]
+    },
+    "allergens": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "ingredients": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "is_bulk": {
+      "type": "boolean"
+    },
+    "is_variable_weight": {
+      "type": "boolean"
+    },
+    "requires_age_check": {
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "id",
+    "name",
+    "ean",
+    "slug",
+    "brand",
+    "packaging",
+    "main_feature",
+    "photos",
+    "legal_name",
+    "origin",
+    "suppliers",
+    "counter_info",
+    "danger_mentions",
+    "mandatory_mentions",
+    "production_variant",
+    "usage_instructions",
+    "storage_instructions",
+    "alcohol_by_volume",
+    "prepared_by_mercadona",
+    "allergens",
+    "ingredients",
+    "is_bulk",
+    "is_variable_weight",
+    "requires_age_check"
+  ],
+  "additionalProperties": false
+}

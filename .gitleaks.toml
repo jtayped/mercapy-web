@@ -1,0 +1,4 @@
+title = "mercapy-web gitleaks configuration"
+
+[extend]
+useDefault = true

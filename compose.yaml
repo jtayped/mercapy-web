@@ -1,0 +1,61 @@
+# production, deployed by coolify. one image so far: the collector, which also
+# applies migrations. the web joins here in ROADMAP.md step 5.
+services:
+  db:
+    image: postgres:18-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: mercapy
+      POSTGRES_USER: mercapy
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD}
+      TZ: UTC
+    volumes:
+      - mercapy-postgres:/var/lib/postgresql
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U mercapy -d mercapy']
+      interval: 5s
+      timeout: 3s
+      retries: 10
+      start_period: 5s
+    deploy:
+      resources:
+        limits:
+          memory: 768M
+
+  migrate:
+    image: ghcr.io/jtayped/mercapy-collector:${TAG:-main}
+    pull_policy: always
+    restart: 'no'
+    command: ['collector', 'migrate']
+    environment:
+      DATABASE_URL: postgresql://mercapy:${POSTGRES_PASSWORD}@db:5432/mercapy
+      MERCAPY_USER_AGENT: ${MERCAPY_USER_AGENT:?set MERCAPY_USER_AGENT with a contact address}
+    depends_on:
+      db:
+        condition: service_healthy
+
+  collector:
+    image: ghcr.io/jtayped/mercapy-collector:${TAG:-main}
+    pull_policy: always
+    restart: unless-stopped
+    # supercronic as pid 1 tries to re-exec itself to reap children and fails
+    # under the unprivileged user; tini as pid 1 reaps instead.
+    init: true
+    environment:
+      DATABASE_URL: postgresql://mercapy:${POSTGRES_PASSWORD}@db:5432/mercapy
+      MERCAPY_LANGUAGE: ${MERCAPY_LANGUAGE:-ca}
+      MERCAPY_REQUEST_INTERVAL: ${MERCAPY_REQUEST_INTERVAL:-0.5}
+      MERCAPY_STALE_HOURS: ${MERCAPY_STALE_HOURS:-72}
+      MERCAPY_DISCONTINUED_DAYS: ${MERCAPY_DISCONTINUED_DAYS:-14}
+      MERCAPY_USER_AGENT: ${MERCAPY_USER_AGENT:?set MERCAPY_USER_AGENT with a contact address}
+      TZ: UTC
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+
+volumes:
+  mercapy-postgres:

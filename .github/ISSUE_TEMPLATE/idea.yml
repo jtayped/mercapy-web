@@ -1,0 +1,31 @@
+name: idea
+description: propose a change or a new capability
+labels: [idea]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: the problem
+      description: what is hard or impossible today. describe the situation, not the fix.
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: what you would do about it
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: what else you considered
+  - type: checkboxes
+    id: policy
+    attributes:
+      label: fit
+      description: >-
+        the project is unaffiliated with mercadona and will never carry ads,
+        affiliate links or paid features, and the collector stays polite.
+      options:
+        - label: this idea is compatible with that
+          required: true

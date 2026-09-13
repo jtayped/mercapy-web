@@ -1,0 +1,13 @@
+# supercronic crontab, container time is UTC. COLLECTION.md: one complete
+# collection per warehouse and day, low steady traffic otherwise.
+#
+# catalogs: every two hours, only warehouses without a complete run today.
+15 */2 * * *   collector collect
+# details: 125 an hour is the 3.000 a day ceiling at half a second per request.
+45 * * * *     collector details --limit 125
+# postal codes: a hundred, three times a day, breadth first across provinces.
+30 6,14,22 * * *  collector discover --limit 100
+# housekeeping.
+5 * * * *      collector sweep
+# spanish names, weekly, from one warehouse.
+0 4 * * 1      collector names-es --warehouse bcn1

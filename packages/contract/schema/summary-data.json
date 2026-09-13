@@ -1,0 +1,385 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "slug": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "brand": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "packaging": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "main_feature": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "share_url": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "thumbnail": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "price": {
+      "type": "object",
+      "properties": {
+        "unit": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^-?\\d+(\\.\\d+)?$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "previous": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^-?\\d+(\\.\\d+)?$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "bulk": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^-?\\d+(\\.\\d+)?$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "reference": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^-?\\d+(\\.\\d+)?$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "tax_percentage": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^-?\\d+(\\.\\d+)?$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "unit_size": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^-?\\d+(\\.\\d+)?$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "pack_size": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^-?\\d+(\\.\\d+)?$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "total_units": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^-?\\d+(\\.\\d+)?$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "drained_weight": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^-?\\d+(\\.\\d+)?$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "minimum_amount": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^-?\\d+(\\.\\d+)?$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "increment_amount": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^-?\\d+(\\.\\d+)?$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "unit_name": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "size_format": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "reference_format": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "is_discounted": {
+          "type": "boolean"
+        },
+        "is_new": {
+          "type": "boolean"
+        },
+        "is_pack": {
+          "type": "boolean"
+        },
+        "approximate_size": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "unit",
+        "previous",
+        "bulk",
+        "reference",
+        "tax_percentage",
+        "unit_size",
+        "pack_size",
+        "total_units",
+        "drained_weight",
+        "minimum_amount",
+        "increment_amount",
+        "unit_name",
+        "size_format",
+        "reference_format",
+        "is_discounted",
+        "is_new",
+        "is_pack",
+        "approximate_size"
+      ],
+      "additionalProperties": false
+    },
+    "published": {
+      "type": [
+        "boolean",
+        "null"
+      ]
+    },
+    "status": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "availability_limit": {
+      "anyOf": [
+        {
+          "type": "string",
+          "pattern": "^-?\\d+(\\.\\d+)?$"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "unavailable_from": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "unavailable_weekdays": {
+      "type": "array",
+      "items": {
+        "type": "integer",
+        "minimum": -9007199254740991,
+        "maximum": 9007199254740991
+      }
+    },
+    "categories": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "level": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": -9007199254740991,
+                "maximum": 9007199254740991
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "parent_id": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "order": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": -9007199254740991,
+                "maximum": 9007199254740991
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "layout": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": -9007199254740991,
+                "maximum": 9007199254740991
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "published": {
+            "type": [
+              "boolean",
+              "null"
+            ]
+          },
+          "is_extended": {
+            "type": [
+              "boolean",
+              "null"
+            ]
+          },
+          "image_url": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "subtitle": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "level",
+          "parent_id",
+          "order",
+          "layout",
+          "published",
+          "is_extended",
+          "image_url",
+          "subtitle"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "requires_age_check": {
+      "type": "boolean"
+    },
+    "is_water": {
+      "type": "boolean"
+    },
+    "is_new_arrival": {
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "id",
+    "name",
+    "slug",
+    "brand",
+    "packaging",
+    "main_feature",
+    "share_url",
+    "thumbnail",
+    "price",
+    "published",
+    "status",
+    "availability_limit",
+    "unavailable_from",
+    "unavailable_weekdays",
+    "categories",
+    "requires_age_check",
+    "is_water",
+    "is_new_arrival"
+  ],
+  "additionalProperties": false
+}

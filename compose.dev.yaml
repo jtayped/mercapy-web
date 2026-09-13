@@ -1,0 +1,23 @@
+services:
+  db:
+    image: postgres:18-alpine
+    environment:
+      POSTGRES_DB: mercapy
+      POSTGRES_USER: mercapy
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-mercapy-dev}
+      TZ: UTC
+    ports:
+      - '${DB_PORT:-5435}:5432'
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U mercapy -d mercapy']
+      interval: 2s
+      timeout: 2s
+      retries: 20
+    volumes:
+      - mercapy-postgres:/var/lib/postgresql
+      # the test database is created once, on first start; the suite truncates
+      # between tests and never drops it.
+      - ./scripts/dev-init.sql:/docker-entrypoint-initdb.d/10-test-db.sql:ro
+
+volumes:
+  mercapy-postgres:

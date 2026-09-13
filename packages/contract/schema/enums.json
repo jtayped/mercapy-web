@@ -1,0 +1,83 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "crawl_run_status": {
+      "type": "string",
+      "enum": [
+        "running",
+        "success",
+        "degraded",
+        "failed"
+      ]
+    },
+    "detail_scope": {
+      "type": "string",
+      "enum": [
+        "unknown",
+        "global",
+        "warehouse"
+      ]
+    },
+    "postal_code_source": {
+      "type": "string",
+      "enum": [
+        "seed",
+        "geonames",
+        "visitor",
+        "manual"
+      ]
+    },
+    "tracked_price_basis": {
+      "type": "string",
+      "enum": [
+        "unit",
+        "reference"
+      ]
+    },
+    "product_event_type": {
+      "type": "string",
+      "enum": [
+        "price_decrease",
+        "price_increase",
+        "official_reduction",
+        "size_change",
+        "rename",
+        "category_move",
+        "detail_change",
+        "local_arrival",
+        "local_disappearance",
+        "restoration",
+        "national_arrival",
+        "national_discontinuation"
+      ]
+    },
+    "detail_request_reason": {
+      "type": "string",
+      "enum": [
+        "first_seen",
+        "summary_change",
+        "audit",
+        "warehouse_divergence",
+        "sample"
+      ]
+    },
+    "collection_issue_kind": {
+      "type": "string",
+      "enum": [
+        "price_consistency",
+        "identity_review"
+      ]
+    }
+  },
+  "required": [
+    "crawl_run_status",
+    "detail_scope",
+    "postal_code_source",
+    "tracked_price_basis",
+    "product_event_type",
+    "detail_request_reason",
+    "collection_issue_kind"
+  ],
+  "additionalProperties": false
+}

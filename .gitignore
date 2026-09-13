@@ -1,0 +1,22 @@
+node_modules/
+.next/
+dist/
+.turbo/
+*.tsbuildinfo
+
+__pycache__/
+*.py[cod]
+.venv/
+.mypy_cache/
+.pytest_cache/
+.ruff_cache/
+
+.env
+.env.*
+!.env.example
+*.sqlite3
+.DS_Store
+
+# private design notes and scratch space, never published.
+.idea/
+.impeccable/
