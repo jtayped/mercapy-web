@@ -18,7 +18,7 @@
   "devDependencies": {
     "@mercapy/config": "workspace:*",
     "@types/node": "^22.10.2",
-    "typescript": "^5.9.3",
+    "typescript": "^6.0.3",
     "vitest": "^3.2.6"
   }
 }

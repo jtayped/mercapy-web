@@ -23,6 +23,6 @@
     "@mercapy/config": "workspace:*",
     "@types/node": "^22.10.2",
     "drizzle-kit": "^0.31.10",
-    "typescript": "^5.9.3"
+    "typescript": "^6.0.3"
   }
 }
