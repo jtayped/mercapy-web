@@ -40,6 +40,7 @@ WRITTEN_COLUMNS: dict[str, dict[str, str]] = {
         "last_seen_any_at": "timestamp with time zone",
         "nationally_discontinued_at": "timestamp with time zone",
         "detail_scope": "USER-DEFINED",
+        "detail_audits": "smallint",
     },
     "category": {
         "id": "text",
