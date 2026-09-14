@@ -9,7 +9,7 @@ description = "daily collector of mercadona's online warehouse catalogs"
 requires-python = ">=3.12"
 dependencies = [
   "httpx>=0.27,<1",
-  "mercapy>=2.1,<3",
+  "mercapy>=2.2,<3",
   "psycopg[binary]>=3.2,<4",
 ]
 
@@ -28,7 +28,7 @@ dev = [
 [tool.uv.sources]
 # 2.1.0 is not on pypi yet (ROADMAP.md, step 1). the pin is the commit that
 # added indexed catalogs and catalan; switch to the registry once published.
-mercapy = { git = "https://github.com/jtayped/mercapy", rev = "a5e245039a8b0a7d8bb3e265e983728af2c96097" }
+mercapy = { git = "https://github.com/jtayped/mercapy", rev = "840f52f866cdbaed47de92ee87b0350a8f205e61" }
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/collector"]
