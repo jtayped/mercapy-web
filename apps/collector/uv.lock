@@ -123,7 +123,7 @@ dev = [
 [package.metadata]
 requires-dist = [
     { name = "httpx", specifier = ">=0.27,<1" },
-    { name = "mercapy", git = "https://github.com/jtayped/mercapy?rev=505438d6a415ddec1bac69b8bb0984275c5bfba6" },
+    { name = "mercapy", git = "https://github.com/jtayped/mercapy?rev=840f52f866cdbaed47de92ee87b0350a8f205e61" },
     { name = "psycopg", extras = ["binary"], specifier = ">=3.2,<4" },
 ]
 
@@ -331,7 +331,7 @@ wheels = [
 [[package]]
 name = "mercapy"
 version = "2.2.0"
-source = { git = "https://github.com/jtayped/mercapy?rev=505438d6a415ddec1bac69b8bb0984275c5bfba6#505438d6a415ddec1bac69b8bb0984275c5bfba6" }
+source = { git = "https://github.com/jtayped/mercapy?rev=840f52f866cdbaed47de92ee87b0350a8f205e61#840f52f866cdbaed47de92ee87b0350a8f205e61" }
 dependencies = [
     { name = "httpx" },
 ]
