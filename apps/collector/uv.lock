@@ -123,7 +123,7 @@ dev = [
 [package.metadata]
 requires-dist = [
     { name = "httpx", specifier = ">=0.27,<1" },
-    { name = "mercapy", git = "https://github.com/jtayped/mercapy?rev=840f52f866cdbaed47de92ee87b0350a8f205e61" },
+    { name = "mercapy", specifier = ">=2.2,<3" },
     { name = "psycopg", extras = ["binary"], specifier = ">=3.2,<4" },
 ]
 
@@ -331,9 +331,13 @@ wheels = [
 [[package]]
 name = "mercapy"
 version = "2.2.0"
-source = { git = "https://github.com/jtayped/mercapy?rev=840f52f866cdbaed47de92ee87b0350a8f205e61#840f52f866cdbaed47de92ee87b0350a8f205e61" }
+source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "httpx" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/49/5d/7b3bf83eaf924d86970b44985d3c0b805dda715622bfc233092322c97ff0/mercapy-2.2.0.tar.gz", hash = "sha256:abf884a4dda8bca9f2d357851cfd1af241262db191ad87832c6ed4af406f0194", size = 97328, upload-time = "2026-09-14T13:41:46.026Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/69/31/8d5d709c01a5f76e21d34438c1688fd16830aa766ae15afb566718b1ef94/mercapy-2.2.0-py3-none-any.whl", hash = "sha256:c0571f0c2cab67db9ab0f0568aac614454c9ddcc86e796849198e0d4120f9139", size = 18227, upload-time = "2026-09-14T13:41:44.505Z" },
 ]
 
 [[package]]
