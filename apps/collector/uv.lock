@@ -124,7 +124,7 @@ dev = [
 requires-dist = [
     { name = "httpx", specifier = ">=0.27,<1" },
     { name = "mercapy", specifier = ">=2.2,<3" },
-    { name = "psycopg", extras = ["binary"], specifier = ">=3.2,<4" },
+    { name = "psycopg", extras = ["binary"], specifier = ">=3.3.5,<4" },
 ]
 
 [package.metadata.requires-dev]
