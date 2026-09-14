@@ -21,6 +21,8 @@ class Settings:
     stale_hours: int = 72
     discontinued_days: int = 14
     detail_daily_budget: int = 3000
+    # matching records in other warehouses before first-seen requests are dropped.
+    detail_audits: int = 2
     user_agent: str = "mercapy-web/0.1 (+https://mercapy.joeltaylor.business)"
     migrations_dir: Path = _DEFAULT_MIGRATIONS
 
@@ -43,6 +45,7 @@ class Settings:
             detail_daily_budget=int(
                 env.get("MERCAPY_DETAIL_DAILY_BUDGET", cls.detail_daily_budget)
             ),
+            detail_audits=int(env.get("MERCAPY_DETAIL_AUDITS", cls.detail_audits)),
             user_agent=env.get("MERCAPY_USER_AGENT", cls.user_agent),
             migrations_dir=Path(env.get("MIGRATIONS_DIR", _DEFAULT_MIGRATIONS)),
         )

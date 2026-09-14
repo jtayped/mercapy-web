@@ -51,8 +51,8 @@ def _collect(conn: Connection, settings: Settings, args: argparse.Namespace) -> 
 
 
 def _details(conn: Connection, settings: Settings, args: argparse.Namespace) -> int:
-    ok, failed = process_detail_queue(conn, settings, limit=args.limit)
-    print(f"details: {ok} stored, {failed} failed")
+    stored, failed, dropped = process_detail_queue(conn, settings, limit=args.limit)
+    print(f"details: {stored} stored, {failed} failed, {dropped} dropped")
     return 0
 
 

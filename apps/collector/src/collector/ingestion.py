@@ -338,7 +338,7 @@ def collect_warehouse(
     counts = {
         "reported": catalog.reported_total_hits,
         "collected": len(catalog.products),
-        "partitions": len(catalog.queried_category_ids),
+        "partitions": catalog.partition_count,
     }
     if not catalog.reconciled:
         message = "deduplicated catalog count did not match the upstream hit count"
