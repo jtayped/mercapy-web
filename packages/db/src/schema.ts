@@ -90,6 +90,10 @@ export const product = pgTable(
     lastSeenAnyAt: instant('last_seen_any_at').notNull(),
     nationallyDiscontinuedAt: instant('nationally_discontinued_at'),
     detailScope: detailScope('detail_scope').notNull().default('unknown'),
+    // warehouses whose record matched the global one. COLLECTION.md schedules
+    // two; once reached, further first-seen requests for the product are
+    // dropped without a fetch so the daily budget reaches new products.
+    detailAudits: smallint('detail_audits').notNull().default(0),
   },
   (table) => [
     index('product_ean_idx').on(table.ean),

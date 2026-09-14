@@ -39,3 +39,11 @@ updates:
     groups:
       docker-minor-patch:
         update-types: [minor, patch]
+    # the python runtime is pinned on purpose, in apps/collector/.python-version
+    # and in pyproject's requires-python. moving it is a decision, not an
+    # update, and the image has to move with them. patches still come through.
+    ignore:
+      - dependency-name: python
+        update-types:
+          - version-update:semver-major
+          - version-update:semver-minor

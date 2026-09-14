@@ -1,0 +1,1 @@
+ALTER TABLE "product" ADD COLUMN "detail_audits" smallint DEFAULT 0 NOT NULL;

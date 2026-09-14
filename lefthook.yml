@@ -17,7 +17,8 @@ pre-commit:
       glob: 'apps/collector/**/*.py'
       run: uv --project apps/collector run ruff check {staged_files} && uv --project apps/collector run ruff format --check {staged_files}
     gitleaks:
-      run: gitleaks protect --staged --redact
+      # optional locally; ci runs it unconditionally.
+      run: sh -c 'command -v gitleaks >/dev/null && gitleaks protect --staged --redact || echo "gitleaks not installed, skipped"'
 pre-push:
   parallel: true
   commands:
