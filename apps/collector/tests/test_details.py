@@ -110,10 +110,10 @@ def test_queue_order_errors_and_not_found(
                 raise NotFoundError("gone")
             return Product(id="100", name="Arròs rodó")
 
-    ok, failed = process_detail_queue(
+    stored, failed, dropped = process_detail_queue(
         conn, settings, limit=10, client_factory=Failing, now=at(1)
     )
-    assert (ok, failed) == (1, 2)
+    assert (stored, failed, dropped) == (1, 1, 1)
     remaining = _requests(conn)
     # mad1 waits for its retry; vlc1's request was dropped as not found and
     # then re-created as an audit by bcn1's successful canonical record.
@@ -125,5 +125,37 @@ def test_queue_order_errors_and_not_found(
     # mad1 is not due yet; the new vlc1 audit is, and is dropped as not found.
     assert process_detail_queue(
         conn, settings, limit=10, client_factory=Failing, now=at(1)
-    ) == (0, 1)
+    ) == (0, 0, 1)
     assert [row["warehouse_code"] for row in _requests(conn)] == ["mad1"]
+
+
+def test_first_seen_requests_stop_after_enough_matching_audits(
+    conn: Connection, settings: Settings, fake_client: type[FakeClient]
+) -> None:
+    fake_client.catalog = catalog(summary("1.20"))
+    codes = ("bcn1", "mad1", "vlc1", "svq1", "alc1")
+    for code in codes:
+        collect_warehouse(conn, settings, code, client_factory=fake_client, now=at(1))
+    record = Product(
+        id="100", name="Arròs rodó", details=ProductDetails(origin="Espanya")
+    )
+    fake_client.products = dict.fromkeys(codes, record)
+
+    class Counting(FakeClient):
+        calls = 0
+
+        def get_product(self, product_id: str | int) -> Product:
+            Counting.calls += 1
+            return super().get_product(product_id)
+
+    result = process_detail_queue(
+        conn, settings, limit=10, client_factory=Counting, now=at(1)
+    )
+    # canonical record plus two matching audits are fetched; the other two are dropped.
+    assert result == (3, 0, 2)
+    assert Counting.calls == 3
+    product = fetch_one(
+        conn, "select detail_scope, detail_audits from product where id = '100'"
+    )
+    assert product == {"detail_scope": "global", "detail_audits": 2}
+    assert _requests(conn) == []

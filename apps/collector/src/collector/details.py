@@ -106,6 +106,11 @@ def _store(
 
     current = _open_version(conn, product_id, target)
     changed = current is None or current["fingerprint"] != digest
+    if scope == "global" and existing_global is not None and not changed:
+        conn.execute(
+            "update product set detail_audits = detail_audits + 1 where id = %s",
+            (product_id,),
+        )
     if diverged and existing_global is not None:
         for row in fetch_all(
             conn,
@@ -161,6 +166,24 @@ def _store(
             enqueue_detail(conn, product_id, row["warehouse_code"], "audit")
 
 
+def _audited_enough(conn: Connection, settings: Settings, request: Row) -> bool:
+    """a first-seen or audit request for a product whose global record has
+    already been confirmed in enough other warehouses has nothing to add."""
+
+    if request["reason"] not in {"first_seen", "audit"}:
+        return False
+    row = fetch_one(
+        conn,
+        "select detail_scope, detail_audits from product where id = %s",
+        (request["product_id"],),
+    )
+    return (
+        row is not None
+        and row["detail_scope"] == "global"
+        and row["detail_audits"] >= settings.detail_audits
+    )
+
+
 def process_detail_request(
     conn: Connection,
     settings: Settings,
@@ -168,8 +191,17 @@ def process_detail_request(
     *,
     client_factory: ClientFactory | None = None,
     now: datetime | None = None,
-) -> bool:
+) -> bool | None:
+    """True when a record was stored, False on a failure that will be retried,
+    None when the request was dropped without a fetch."""
+
     product_id, warehouse_code = request["product_id"], request["warehouse_code"]
+    if _audited_enough(conn, settings, request):
+        conn.execute(
+            "delete from detail_request where product_id = %s and warehouse_code = %s",
+            (product_id, warehouse_code),
+        )
+        return None
     try:
         detail = _fetch_detail(settings, warehouse_code, product_id, client_factory)
     except NotFoundError:
@@ -179,7 +211,7 @@ def process_detail_request(
             "delete from detail_request where product_id = %s and warehouse_code = %s",
             (product_id, warehouse_code),
         )
-        return False
+        return None
     except Exception as error:
         attempts = int(request["attempts"]) + 1
         conn.execute(
@@ -208,9 +240,10 @@ def process_detail_queue(
     limit: int,
     client_factory: ClientFactory | None = None,
     now: datetime | None = None,
-) -> tuple[int, int]:
-    """returns (succeeded, failed). the queue order is the priority column:
-    new products, descriptive changes, audits, divergences, the sample."""
+) -> tuple[int, int, int]:
+    """returns (stored, failed, dropped). the queue order is the priority
+    column: new products, descriptive changes, audits, divergences, the sample.
+    dropped requests cost no request, so `limit` bounds the http traffic."""
 
     current = now or now_utc()
     requests = fetch_all(
@@ -222,13 +255,15 @@ def process_detail_queue(
         """,
         (current, limit),
     )
-    succeeded = sum(
+    results = [
         process_detail_request(
             conn, settings, request, client_factory=client_factory, now=now
         )
         for request in requests
-    )
-    return succeeded, len(requests) - succeeded
+    ]
+    stored = sum(result is True for result in results)
+    dropped = sum(result is None for result in results)
+    return stored, len(results) - stored - dropped, dropped
 
 
 def enqueue_sample(conn: Connection, *, limit: int, max_age_days: int = 30) -> int:
