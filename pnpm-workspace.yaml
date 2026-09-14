@@ -5,3 +5,10 @@ allowBuilds:
   esbuild: true
   lefthook: true
   unrs-resolver: true
+
+# drizzle-kit still reaches esbuild through the deprecated @esbuild-kit
+# packages, which pin 0.18. that line carries GHSA-67mh-4wv8-2f99, and
+# upstream has no release that drops the dependency. the override is scoped
+# to that path so vite and tsx keep resolving esbuild on their own.
+overrides:
+  '@esbuild-kit/core-utils>esbuild': '^0.25.0'
